@@ -22,6 +22,7 @@
                                         <th>Location</th>
                                         <th>Phone</th>
                                         <th>Email</th>
+                                        <th>User ID</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -32,6 +33,7 @@
                                             <td>{{ $customer->location }}</td>
                                             <td>{{ $customer->phone }}</td>
                                             <td>{{ $customer->email }}</td>
+                                            <td>{{ $customer->user_id }}</td>
                                             <td>
                                                 <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-sm btn-primary">Edit</a>
                                                 <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" style="display: inline-block;">

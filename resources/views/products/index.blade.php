@@ -14,6 +14,7 @@
                 <th>Description</th>
                 <th>Price</th>
                 <th>Category</th>
+                <th>Supplier</th> <!-- Add Supplier column header -->
                 <th>Actions</th>
             </tr>
         </thead>
@@ -25,6 +26,7 @@
                     <td>{{ $product->description }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->category->name }}</td>
+                    <td>{{ $product->supplier->supplier_name ?? 'N/A' }}</td> <!-- Display supplier name or 'N/A' if no supplier -->
                     <td>
                         <a href="{{ route('products.edit', $product) }}" class="btn btn-warning">Edit</a>
                         <form action="{{ route('products.destroy', $product) }}" method="POST" style="display: inline;">

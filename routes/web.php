@@ -6,6 +6,10 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\Auth\RegisterCustomerController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +31,7 @@ Auth::routes();
 
 // Routes that require authentication
 Route::middleware(['auth'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -63,6 +68,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])->name('orders.edit');
     Route::put('/orders/{id}', [OrderController::class, 'update'])->name('orders.update');
     Route::delete('/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
+    Route::get('/purchases', [PurchaseController::class, 'index'])->name('purchases.index');
+    Route::get('/purchases/create', [PurchaseController::class, 'create'])->name('purchases.create');
+    Route::post('/purchases', [PurchaseController::class, 'store'])->name('purchases.store');
+    Route::get('/purchases/{id}/edit', [PurchaseController::class, 'edit'])->name('purchases.edit');
+    Route::put('/purchases/{id}', [PurchaseController::class, 'update'])->name('purchases.update');
+    Route::delete('/purchases/{id}', [PurchaseController::class, 'destroy'])->name('purchases.destroy');
 });
 
 

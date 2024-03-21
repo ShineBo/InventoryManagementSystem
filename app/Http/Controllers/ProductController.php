@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Supplier; // Add the Supplier model
 
 class ProductController extends Controller
 {
@@ -23,7 +24,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('products.add', ['categories' => $categories]);
+        $suppliers = Supplier::all(); // Fetch all suppliers
+        return view('products.add', ['categories' => $categories, 'suppliers' => $suppliers]); // Pass suppliers data to the view
     }
 
     /**
@@ -37,6 +39,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
+            'supplier_id' => 'nullable|exists:suppliers,id', // Validate supplier_id if present
         ]);
 
         // Create a new product instance
@@ -45,6 +48,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
+        $product->supplier_id = $request->supplier_id; // Assign supplier_id if present
         $product->save();
 
         // Redirect back to the product index page with a success message
@@ -66,7 +70,8 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
         $categories = Category::all();
-        return view('products.edit', ['product' => $product, 'categories' => $categories]);
+        $suppliers = Supplier::all(); // Fetch all suppliers
+        return view('products.edit', ['product' => $product, 'categories' => $categories, 'suppliers' => $suppliers]); // Pass suppliers data to the view
     }
 
     public function update(Request $request, string $id)
@@ -76,6 +81,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
+            'supplier_id' => 'nullable|exists:suppliers,id', // Validate supplier_id if present
         ]);
 
         $product = Product::find($id);
@@ -83,6 +89,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->price = $request->price;
         $product->category_id = $request->category_id;
+        $product->supplier_id = $request->supplier_id; // Assign supplier_id if present
         $product->save();
 
         return redirect()->route('products.index')->with('success', 'Product updated successfully.');

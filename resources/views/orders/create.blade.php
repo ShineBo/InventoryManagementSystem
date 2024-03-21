@@ -1,5 +1,3 @@
-<!-- resources/views/orders/create.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -36,6 +34,15 @@
                                 <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1">
                             </div>
 
+                            <div class="form-group">
+                                <label for="status">Status:</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="pending">Pending</option>
+                                    <option value="shipped">Shipped</option>
+                                    <option value="canceled">Canceled</option>
+                                </select>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">Add Order</button>
                         </form>
                     </div>
@@ -44,3 +51,4 @@
         </div>
     </div>
 @endsection
+

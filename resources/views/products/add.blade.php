@@ -1,5 +1,3 @@
-<!-- resources/views/products/add.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -33,8 +31,16 @@
             </select>
         </div>
 
+        <div class="form-group">
+            <label for="supplier_id">Supplier:</label>
+            <select name="supplier_id" id="supplier_id" class="form-control">
+                @foreach($suppliers as $supplier)
+                    <option value="{{ $supplier->id }}">{{ $supplier->supplier_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit" class="btn btn-primary">Add Product</button>
     </form>
 </div>
 @endsection
-

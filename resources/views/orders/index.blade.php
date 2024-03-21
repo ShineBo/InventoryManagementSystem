@@ -1,5 +1,3 @@
-<!-- resources/views/orders/index.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -21,6 +19,7 @@
                                         <th>Customer</th>
                                         <th>Product</th>
                                         <th>Quantity</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -30,13 +29,16 @@
                                             <td>{{ $order->customer->name }}</td>
                                             <td>{{ $order->product->name }}</td>
                                             <td>{{ $order->quantity }}</td>
+                                            <td>{{ ucfirst($order->status) }}</td>
                                             <td>
-                                                <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                                <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display: inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this order?')">Delete</button>
-                                                </form>
+                                                @if ($order->status !== 'shipped')
+                                                    <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">Edit</a>
+                                                    <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display: inline-block;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this order?')">Delete</button>
+                                                    </form>
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
@@ -49,3 +51,5 @@
         </div>
     </div>
 @endsection
+
+

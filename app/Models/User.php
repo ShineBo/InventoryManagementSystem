@@ -21,6 +21,13 @@ class User extends Authenticatable
         {
             return $this->role == 'user';
         }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -30,6 +37,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
