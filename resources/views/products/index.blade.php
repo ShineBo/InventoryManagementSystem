@@ -3,7 +3,11 @@
 @section('content')
 <div class="container">
     <h1>Products</h1>
-
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
     <a href="{{ route('products.create') }}" class="btn btn-primary">Add New Product</a>
 
     <table class="table mt-4">

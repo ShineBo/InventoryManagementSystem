@@ -25,7 +25,7 @@ class InventoryController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity_in_stock' => 'required|integer',
+            'quantity_in_stock' => 'required|integer|min:0', // Ensure quantity is not less than 0
             'reorder_level' => 'required|integer',
         ]);
 
@@ -62,7 +62,7 @@ class InventoryController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity_in_stock' => 'required|integer',
+            'quantity_in_stock' => 'required|integer|min:0', // Ensure quantity is not less than 0
             'reorder_level' => 'required|integer',
         ]);
 

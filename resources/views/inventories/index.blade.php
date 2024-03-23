@@ -4,6 +4,12 @@
 <div class="container">
     <h1>Inventories</h1>
 
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
     <a href="{{ route('inventories.create') }}" class="btn btn-primary">Add New Inventory</a>
 
     <table class="table mt-4">
@@ -27,10 +33,10 @@
                     <td>{{ $inventory->quantity_in_stock }}</td>
                     <td>{{ $inventory->reorder_level }}</td>
                     <td>
-                        @if($inventory->quantity_in_stock < $inventory->reorder_level)
-                            <span class="text-warning">Low Stock</span>
-                        @elseif($inventory->quantity_in_stock == 0)
+                        @if($inventory->quantity_in_stock == 0)
                             <span class="text-danger">Out of Stock</span>
+                        @elseif($inventory->quantity_in_stock < $inventory->reorder_level)
+                            <span class="text-warning">Low Stock</span>
                         @else
                             <span class="text-success">In Stock</span>
                         @endif

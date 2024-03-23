@@ -3,7 +3,11 @@
 @section('content')
     <div class="container">
         <h1>Suppliers</h1>
-
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
         <a href="{{ route('suppliers.create') }}" class="btn btn-primary mb-3">Add New Supplier</a>
 
         <table class="table">
