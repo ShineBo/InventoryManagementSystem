@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller
 {
@@ -28,7 +29,15 @@ class InventoryController extends Controller
             'reorder_level' => 'required|integer',
         ]);
 
+        // Get the highest existing ID in the inventory table
+        $latestId = DB::table('inventories')->max('id');
+
+        // Calculate the next available ID
+        $nextId = $latestId ? $latestId + 1 : 1;
+
+        // Create a new inventory record with the manually generated ID
         $inventory = new Inventory();
+        $inventory->id = $nextId;
         $inventory->product_id = $request->product_id;
         $inventory->quantity_in_stock = $request->quantity_in_stock;
         $inventory->reorder_level = $request->reorder_level;
@@ -68,10 +77,10 @@ class InventoryController extends Controller
 
     public function destroy(string $id)
     {
-        $inventory = Inventory::find($id);
+        $inventory = Inventory::findOrFail($id);
         $inventory->delete();
 
-        return redirect()->route('inventories.index')->with('success', 'Inventory deleted successfully.');
+        return redirect()->route('inventories.index')->with('success', 'Inventory soft deleted successfully.');
     }
 }
 

@@ -40,7 +40,7 @@ class PurchaseController extends Controller
             'supplier_id' => 'required|exists:suppliers,id',
             'quantity' => 'required|integer|min:1',
             'purchase_date' => 'required|date',
-            'status' => 'required|string|in:pending,fulfilled',
+            'status' => 'required|string|in:pending,fulfilled,canceled', // Add 'canceled' status
         ]);
 
         // Create a new purchase instance
@@ -82,7 +82,7 @@ class PurchaseController extends Controller
             'supplier_id' => 'required|exists:suppliers,id',
             'quantity' => 'required|integer|min:1',
             'purchase_date' => 'required|date',
-            'status' => 'required|string|in:pending,fulfilled',
+            'status' => 'required|string|in:pending,fulfilled,canceled', // Add 'canceled' status
         ]);
 
         $purchase = Purchase::find($id);

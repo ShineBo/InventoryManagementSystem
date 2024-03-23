@@ -29,11 +29,11 @@
                     <td>{{ $product->supplier->supplier_name ?? 'N/A' }}</td> <!-- Display supplier name or 'N/A' if no supplier -->
                     <td>
                         <a href="{{ route('products.edit', $product) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('products.destroy', $product) }}" method="POST" style="display: inline;">
+                        {{-- <form action="{{ route('products.destroy', $product) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                        </form> --}}
                     </td>
                 </tr>
             @endforeach

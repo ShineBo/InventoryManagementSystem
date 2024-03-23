@@ -47,9 +47,9 @@
                                 <select name="status" id="status" class="form-control" required>
                                     <option value="pending" @if ($purchase->status === 'pending') selected @endif>Pending</option>
                                     <option value="fulfilled" @if ($purchase->status === 'fulfilled') selected @endif>Fulfilled</option>
+                                    <option value="canceled" @if ($purchase->status === 'canceled') selected @endif>Canceled</option> <!-- Add canceled option -->
                                 </select>
                             </div>
-
 
                             <button type="submit" class="btn btn-primary">Update Purchase</button>
                         </form>

@@ -46,6 +46,7 @@
                                 <select name="status" id="status" class="form-control">
                                     <option value="pending">Pending</option>
                                     <option value="fulfilled">Fulfilled</option>
+                                    <option value="canceled">Canceled</option> <!-- Add canceled option -->
                                 </select>
                             </div>
 

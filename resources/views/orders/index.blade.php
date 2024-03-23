@@ -19,6 +19,7 @@
                                         <th>Customer</th>
                                         <th>Product</th>
                                         <th>Quantity</th>
+                                        <th>Total Price</th> <!-- New column -->
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -29,15 +30,16 @@
                                             <td>{{ $order->customer->name }}</td>
                                             <td>{{ $order->product->name }}</td>
                                             <td>{{ $order->quantity }}</td>
+                                            <td>$ {{ $order->total_price }}</td> <!-- Display total price -->
                                             <td>{{ ucfirst($order->status) }}</td>
                                             <td>
-                                                @if ($order->status !== 'shipped')
+                                                @if ($order->status !== 'shipped' && $order->status !== 'canceled')
                                                     <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                                    <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display: inline-block;">
+                                                    {{-- <form action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display: inline-block;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this order?')">Delete</button>
-                                                    </form>
+                                                    </form> --}}
                                                 @endif
                                             </td>
                                         </tr>

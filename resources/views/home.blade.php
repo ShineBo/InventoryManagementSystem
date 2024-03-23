@@ -75,6 +75,78 @@
                     </div>
                 </div>
             </div>
+            <div class="container mt-5">
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <h2>Pending Orders</h2>
+                        @if ($pendingOrders->isEmpty())
+                            <p>No pending orders.</p>
+                        @else
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Customer Name</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($pendingOrders as $order)
+                                        <tr>
+                                            <td>{{ $order->id }}</td>
+                                            <td>{{ $order->customer->name }}</td>
+                                            <td>{{ $order->product->name }}</td>
+                                            <td>{{ $order->quantity }}</td>
+                                            <td>$ {{ $order->total_price }}</td> <!-- Display total price -->
+                                            <td>{{ ucfirst($order->status) }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
+                        <h2>Stocks</h2>
+                        @if ($stocks->isEmpty())
+                            <p>No stocks available.</p>
+                        @else
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Product ID</th>
+                                        <th>Product Name</th>
+                                        <th>Quantity in Stock</th>
+                                        {{-- <th>Reorder Level</th> --}}
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($stocks as $stock)
+                                        <tr>
+                                            <td>{{ $stock->product_id }}</td>
+                                            <td>{{ $stock->product->name }}</td>
+                                            <td>{{ $stock->quantity_in_stock }}</td>
+                                            {{-- <td>{{ $stock->reorder_level }}</td> --}}
+                                            <td>
+                                                @if($stock->quantity_in_stock < $stock->reorder_level)
+                                                    <span class="text-warning">Low Stock</span>
+                                                @elseif($stock->quantity_in_stock == 0)
+                                                    <span class="text-danger">Out of Stock</span>
+                                                @else
+                                                    <span class="text-success">In Stock</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+            </div>
             @endif
         </div>
     </div>

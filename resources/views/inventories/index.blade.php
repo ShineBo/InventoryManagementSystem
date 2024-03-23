@@ -11,6 +11,7 @@
             <tr>
                 <th>ID</th>
                 <th>Product ID</th>
+                <th>Product Name</th>
                 <th>Quantity in Stock</th>
                 <th>Reorder Level</th>
                 <th>Status</th>
@@ -22,6 +23,7 @@
                 <tr>
                     <td>{{ $inventory->id }}</td>
                     <td>{{ $inventory->product_id }}</td>
+                    <td>{{ $inventory->product->name }}</td> <!-- Fetch product name from the product model -->
                     <td>{{ $inventory->quantity_in_stock }}</td>
                     <td>{{ $inventory->reorder_level }}</td>
                     <td>
@@ -34,12 +36,16 @@
                         @endif
                     </td>
                     <td>
-                        <a href="{{ route('inventories.edit', $inventory->id) }}" class="btn btn-primary">Edit</a>
-                        <form action="{{ route('inventories.destroy', $inventory->id) }}" method="POST">
+                        @if($inventory->quantity_in_stock < $inventory->reorder_level || $inventory->quantity_in_stock == 0)
+                            <a href="{{ route('purchases.create') }}" class="btn btn-warning">Restock</a>
+                        @else
+                            <a href="{{ route('inventories.edit', $inventory->id) }}" class="btn btn-primary">Edit</a>
+                        @endif
+                        {{-- <form action="{{ route('inventories.destroy', $inventory->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
+                        </form> --}}
                     </td>
                 </tr>
             @endforeach
@@ -47,4 +53,3 @@
     </table>
 </div>
 @endsection
-

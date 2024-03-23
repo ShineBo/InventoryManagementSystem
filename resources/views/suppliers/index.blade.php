@@ -23,11 +23,11 @@
                         <td>{{ $supplier->phone_number }}</td>
                         <td>
                             <a href="{{ route('suppliers.edit', $supplier) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('suppliers.destroy', $supplier) }}" method="POST" style="display: inline;">
+                            {{-- <form action="{{ route('suppliers.destroy', $supplier) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                            </form> --}}
                         </td>
                     </tr>
                 @endforeach

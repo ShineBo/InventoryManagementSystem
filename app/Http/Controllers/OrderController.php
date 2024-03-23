@@ -53,11 +53,16 @@ class OrderController extends Controller
             ]);
         }
 
+        // Calculate total price
+        $product = Product::findOrFail($request->product_id);
+        $totalPrice = $product->price * $request->quantity;
+
         // Create a new order instance
         $order = new Order();
         $order->customer_id = $request->customer_id;
         $order->product_id = $request->product_id;
         $order->quantity = $request->quantity;
+        $order->total_price = $totalPrice; // Assign total price
         $order->save();
 
         // If order was successfully created and status is fulfilled, update inventory
@@ -131,12 +136,17 @@ public function update(Request $request, $id)
         $inventory->quantity_in_stock += $order->quantity;
     }
 
-    // Update the order instance
-    $order->customer_id = $request->customer_id;
-    $order->product_id = $request->product_id;
-    $order->quantity = $request->quantity;
-    $order->status = $request->status; // Update status
-    $order->save();
+        // Calculate total price
+        $product = Product::findOrFail($request->product_id);
+        $totalPrice = $product->price * $request->quantity;
+
+        // Update the order instance
+        $order->customer_id = $request->customer_id;
+        $order->product_id = $request->product_id;
+        $order->quantity = $request->quantity;
+        $order->status = $request->status;
+        $order->total_price = $totalPrice; // Assign total price
+        $order->save();
 
     // Save the inventory changes
     $inventory->save();
