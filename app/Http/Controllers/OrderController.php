@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Inventory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class OrderController extends Controller
@@ -37,10 +38,8 @@ class OrderController extends Controller
     {
         // Validate the incoming request data
         $request->validate([
-            'customer_id' => 'required|exists:customers,id',
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
-            'status' => 'nullable|in:shipped,pending,canceled', // Validate status
         ]);
 
         // Retrieve the inventory for the requested product
@@ -59,10 +58,11 @@ class OrderController extends Controller
 
         // Create a new order instance
         $order = new Order();
-        $order->customer_id = $request->customer_id;
+        $order->customer_id = Auth::user()->customer->id;
         $order->product_id = $request->product_id;
         $order->quantity = $request->quantity;
-        $order->total_price = $totalPrice; // Assign total price
+        $order->total_price = $totalPrice; // Save total price
+        $order->status = 'pending'; // Set status to pending
         $order->save();
 
         // If order was successfully created and status is fulfilled, update inventory
@@ -73,7 +73,7 @@ class OrderController extends Controller
         }
 
         // Redirect back to the order index page with a success message
-        return redirect()->route('orders.index')->with('success', 'Order added successfully.');
+        return redirect()->route('home')->with('success', 'Order added successfully.');
     }
 
     /**

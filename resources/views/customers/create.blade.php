@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Add Customer</div>
+                    <div class="card-header">Your Information</div>
 
                     <div class="card-body">
                         <form action="{{ route('customers.store') }}" method="POST">
@@ -33,7 +33,7 @@
                                 <input type="email" name="email" id="email" class="form-control" required>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Add Customer</button>
+                            <button type="submit" class="btn btn-primary">Register</button>
                         </form>
                     </div>
                 </div>

@@ -16,7 +16,7 @@
                     <div class="card-header">Customers</div>
 
                     <div class="card-body">
-                        <a href="{{ route('customers.create') }}" class="btn btn-primary mb-3">Add Customer</a>
+                        {{-- <a href="{{ route('customers.create') }}" class="btn btn-primary mb-3">Add Customer</a> --}}
 
                         @if ($customers->isEmpty())
                             <p>No customers found.</p>

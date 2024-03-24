@@ -30,6 +30,15 @@
                     </div>
                     <div class="dropdown col">
                         <button class="btn btn-primary dropdown-toggle" type="button" id="productsDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Categories
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="productsDropdown">
+                            <a class="dropdown-item" href="{{ route('categories.index') }}">View Categories</a>
+                            <a class="dropdown-item" href="{{ route('categories.create') }}">Add Category</a>
+                        </div>
+                    </div>
+                    <div class="dropdown col">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="productsDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Suppliers
                         </button>
                         <div class="dropdown-menu" aria-labelledby="productsDropdown">
@@ -52,7 +61,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="productsDropdown">
                         <a class="dropdown-item" href="{{ route('customers.index') }}">View Customers</a>
-                        <a class="dropdown-item" href="{{ route('customers.create') }}">Add Customer</a>
+                        {{-- <a class="dropdown-item" href="{{ route('customers.create') }}">Add Customer</a> --}}
                         </div>
                     </div>
                     <div class="dropdown col">
@@ -61,10 +70,10 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="productsDropdown">
                         <a class="dropdown-item" href="{{ route('orders.index') }}">View Orders</a>
-                        <a class="dropdown-item" href="{{ route('orders.create') }}">Add Order</a>
+                        {{-- <a class="dropdown-item" href="{{ route('orders.create') }}">Add Order</a> --}}
                         </div>
                     </div>
-                    <div class="dropdown col">
+                    <div class="dropdown col mt-3">
                         <button class="btn btn-primary dropdown-toggle" type="button" id="productsDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Purchases
                         </button>
@@ -131,10 +140,10 @@
                                             <td>{{ $stock->quantity_in_stock }}</td>
                                             {{-- <td>{{ $stock->reorder_level }}</td> --}}
                                             <td>
-                                                @if($stock->quantity_in_stock < $stock->reorder_level)
-                                                    <span class="text-warning">Low Stock</span>
-                                                @elseif($stock->quantity_in_stock == 0)
+                                                @if($stock->quantity_in_stock == 0)
                                                     <span class="text-danger">Out of Stock</span>
+                                                @elseif($stock->quantity_in_stock < $stock->reorder_level)
+                                                    <span class="text-warning">Low Stock</span>
                                                 @else
                                                     <span class="text-success">In Stock</span>
                                                 @endif
@@ -148,6 +157,46 @@
                 </div>
             </div>
             @endif
+            @if(Auth::check() && Auth::user()->isUser())
+                <!-- User Dashboard content -->
+                <div class="container mt-5">
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            @if(isset($userOrders) && !$userOrders->isEmpty())
+                            <h2>Your Orders</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        {{-- <th>Order ID</th> --}}
+                                        <th>Customer Name</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($userOrders as $order)
+                                        <tr>
+                                            {{-- <td>{{ $order->id }}</td> --}}
+                                            <td>{{ $order->customer->name }}</td>
+                                            <td>{{ $order->product->name }}</td>
+                                            <td>{{ $order->quantity }}</td>
+                                            <td>$ {{ $order->total_price }}</td> <!-- Display total price -->
+                                            <td>{{ ucfirst($order->status) }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <p>No orders Found.</p>
+                        @endif
+                        </div>
+                    </div>
+                    <a class="btn btn-primary" href="{{ route('orders.create') }}">Make an Order</a>
+                </div>
+            @endif
+
         </div>
     </div>
 </div>

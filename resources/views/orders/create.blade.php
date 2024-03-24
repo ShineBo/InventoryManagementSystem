@@ -5,19 +5,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Add Order</div>
+                    <div class="card-header">Make an Order</div>
 
                     <div class="card-body">
                         <form action="{{ route('orders.store') }}" method="POST">
                             @csrf
 
                             <div class="form-group">
-                                <label for="customer_id">Customer:</label>
-                                <select name="customer_id" id="customer_id" class="form-control">
-                                    @foreach ($customers as $customer)
-                                        <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                                    @endforeach
-                                </select>
+                                <label for="customer_name">Customer Name:</label>
+                                <input type="text" name="customer_name" id="customer_name" class="form-control" value="{{ Auth::user()->customer->name }}" readonly>
                             </div>
 
                             <div class="form-group">
@@ -34,14 +30,7 @@
                                 <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1">
                             </div>
 
-                            <div class="form-group">
-                                <label for="status">Status:</label>
-                                <select name="status" id="status" class="form-control">
-                                    <option value="pending">Pending</option>
-                                    <option value="shipped">Shipped</option>
-                                    <option value="canceled">Canceled</option>
-                                </select>
-                            </div>
+                            <input type="hidden" name="status" value="pending">
 
                             <button type="submit" class="btn btn-primary">Add Order</button>
                         </form>
@@ -51,4 +40,3 @@
         </div>
     </div>
 @endsection
-

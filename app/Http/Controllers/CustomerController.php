@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -43,10 +44,14 @@ class CustomerController extends Controller
         $customer->location = $request->location;
         $customer->phone = $request->phone;
         $customer->email = $request->email;
+
+        // Set the user_id to the current authenticated user's ID
+        $customer->user_id = Auth::id();
+
         $customer->save();
 
         // Redirect back to the customer index page with a success message
-        return redirect()->route('customers.index')->with('success', 'Customer added successfully.');
+        return redirect()->route('home')->with('success', 'Customer added successfully.');
     }
 
     /**
